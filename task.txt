@@ -1,0 +1,19 @@
+The final task would be task registration form with following fields:
+
+Name
+Email
+Mobile number
+Age
+Password
+Confirm password
+Address
+Country
+State
+City
+
+The email and should  validate the format.
+The password and confirm password should be validated using cross field validation in reactive form.
+
+For country, state and city, the fields should change based on hierarchy. If I select india, the state should show only the states in india.
+
+Create the form using both template driven and reactive form.

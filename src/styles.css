@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "tailwindcss";
+
+.input-label {
+  @apply text-amber-800 font-bold;
+}
+
+.t-input-label {
+  @apply text-violet-800 font-bold;
+}
+
+.input-field {
+  @apply w-[100%] font-bold block p-3 bg-amber-400 outline-0 rounded-lg hover:bg-amber-300 transition-all ease-in-out [appearance:textfield];
+}
+
+.t-input-field {
+  @apply w-[100%] font-bold block p-3 bg-violet-400 outline-0 rounded-lg hover:bg-violet-300 transition-all ease-in-out [appearance:textfield];
+}
+
+.picker-dropdown {
+  @apply max-h-[200px] w-[100%] overflow-y-scroll absolute left-[50%] top-20  translate-x-[-50%] bg-amber-200 rounded-xl z-2;
+}
+
+.t-picker-dropdown {
+  @apply max-h-[200px] w-[100%] overflow-y-scroll absolute left-[50%] top-20  translate-x-[-50%] bg-violet-200 rounded-xl z-2;
+}
+
+.nav {
+  @apply bg-amber-100 text-amber-800 hover:bg-amber-800 hover:text-amber-200 transition-all ease-in-out font-bold rounded-lg p-3;
+}

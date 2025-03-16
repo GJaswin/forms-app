@@ -1,0 +1,149 @@
+<div *ngIf="loadingCountries">
+  <p
+    class="absolute top-2 left-[50%] translate-x-[-50%] bg-amber-200 text-amber-800 p-3 text-center rounded-lg font-bold">
+    Loading Countries...</p>
+</div>
+
+<div *ngIf="submitted">
+  <p
+    class="absolute top-2 left-[50%] translate-x-[-50%] bg-emerald-200 text-emerald-800 p-3 text-center rounded-lg font-bold">
+    Form Submitted!</p>
+</div>
+
+<form action="#" class="bg-amber-100 rounded-lg p-5" [formGroup]="reactiveForm" (submit)="onSubmit()">
+  <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
+    <div>
+      <label for="name" class="input-label">Name</label>
+      <input type="text" id="name" class="input-field" formControlName="name">
+      <div *ngIf="reactiveForm.get('name')?.invalid && reactiveForm.get('name')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('name')?.errors?.['required']">Name
+          is required.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="email" class="input-label">Email</label>
+      <input type="email" id="email" class="input-field" formControlName="email">
+      <div *ngIf="reactiveForm.get('email')?.invalid && reactiveForm.get('email')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('email')?.errors?.['required']">
+          Email is required.</p>
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('email')?.errors?.['email']">Enter
+          a valid email</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="phone" class="input-label">Phone</label>
+      <input type="number" id="phone" class="input-field" formControlName="phone">
+      <div *ngIf="reactiveForm.get('phone')?.invalid && reactiveForm.get('phone')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('phone')?.errors?.['required']">
+          Phone is required.</p>
+      </div>
+    </div>
+    <div>
+      <label for="age" class="input-label">Age</label>
+      <input type="number" id="age" class="input-field" formControlName="age">
+      <div *ngIf="reactiveForm.get('age')?.invalid && reactiveForm.get('age')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('age')?.errors?.['required']">
+          Age is required.</p>
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('age')?.errors?.['min']">
+          You must be above 18 years old.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="password" class="input-label">Password</label>
+      <input type="password" id="password" class="input-field" formControlName="password">
+      <div *ngIf="reactiveForm.get('password')?.invalid && reactiveForm.get('password')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('password')?.errors?.['required']">
+          Enter a password.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="confirm-password" class="input-label">Confirm Password</label>
+      <input type="password" id="confirm-password" class="input-field" formControlName="confirm_password">
+
+      <div class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold"
+          *ngIf="reactiveForm.hasError('passwordMismatch') && reactiveForm.touched">
+          Passwords do not match.</p>
+      </div>
+    </div>
+
+    <div>
+      <label for="address" class="input-label">Address</label>
+      <input type="text" id="address" class="input-field" formControlName="address">
+      <div *ngIf="reactiveForm.get('address')?.invalid && reactiveForm.get('address')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('address')?.errors?.['required']">
+          Address is required.</p>
+      </div>
+    </div>
+
+    <div class="relative">
+      <label for="country" class="input-label">Country</label>
+      <input type="text" id="country" class="input-field" formControlName="country" (mouseup)="countryFieldHover()">
+
+      <div *ngIf="reactiveForm.get('country')?.invalid && reactiveForm.get('country')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('country')?.errors?.['required']">
+          Country is required.</p>
+      </div>
+      <div *ngIf="countryHovered">
+        <div class="picker-dropdown" (mouseleave)="countryFieldLeave()">
+          <ul>
+            <li *ngFor="let country of countries"
+              class="text-amber-800 p-2 font-semibold hover:bg-amber-400 transition-all ease-in-out cursor-pointer"
+              (mouseup)="setCountry(country)">{{ country }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="relative">
+      <label for="state" class="input-label">State</label>
+      <input type="text" id="state" class="input-field" formControlName="state"
+        (mouseup)="getStates(reactiveForm.get('country')?.value)">
+      <div *ngIf="reactiveForm.get('state')?.invalid && reactiveForm.get('state')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('state')?.errors?.['required']">
+          State is required.</p>
+      </div>
+
+      <div *ngIf="stateHovered">
+        <div class="picker-dropdown" (mouseleave)="stateFieldLeave()">
+          <ul>
+            <li *ngFor="let state of states"
+              class="text-amber-800 p-2 font-semibold hover:bg-amber-400 transition-all ease-in-out cursor-pointer"
+              (mouseup)="setState(state.name)">{{ state.name }}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="relative">
+      <label for="city" class="input-label">City</label>
+      <input type="text" id="city" class="input-field" formControlName="city"
+        (mouseup)="getCities(reactiveForm.get('country')?.value, reactiveForm.get('state')?.value)">
+      <div *ngIf="reactiveForm.get('city')?.invalid && reactiveForm.get('city')?.touched" class="relative">
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('city')?.errors?.['required']">
+          City is required.</p>
+      </div>
+
+      <div *ngIf="cityHovered">
+        <div class="picker-dropdown" (mouseleave)="cityFieldLeave()">
+          <ul>
+            <li *ngFor="let city of cities"
+              class="text-amber-800 p-2 font-semibold hover:bg-amber-400 transition-all ease-in-out cursor-pointer"
+              (mouseup)="setCity(city.name)">{{ city.name }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="mt-10 flex justify-center">
+    <button
+      class="bg-amber-700 w-[75%] p-3 text-white rounded-md transition-all ease-in-out hover:bg-amber-500">Submit</button>
+  </div>
+</form>

@@ -1,0 +1,11 @@
+.t-picker-dropdown::-webkit-scrollbar {
+  width: 16px;
+}
+.t-picker-dropdown::-webkit-scrollbar-track {
+  background-color: #ffba00;
+  border-radius: 2px;
+}
+.t-picker-dropdown::-webkit-scrollbar-thumb {
+  background-color: #e17100;
+  border-radius: 4px;
+}
