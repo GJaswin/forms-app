@@ -23,6 +23,7 @@ export class ReactiveFormComponent {
 
   loadingCountries = true;
   submitted = false;
+  error = false;
 
 
   ngOnInit(): void {
@@ -120,7 +121,11 @@ export class ReactiveFormComponent {
         this.submitted = false;
       }, 4000);
     } else {
-      console.log("Form is invalid! Please fill all fields correctly.");
+      console.error("Error: Invalid Form Details");
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 4000);
       this.reactiveForm.markAllAsTouched();
     }
   }
@@ -129,7 +134,7 @@ export class ReactiveFormComponent {
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     phone: new FormControl('', [Validators.required]),
-    age: new FormControl('', [Validators.required, Validators.min(18)]),
+    age: new FormControl('', [Validators.required, Validators.min(18), Validators.max(130)]),
     password: new FormControl('', [Validators.required]),
     confirm_password: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),

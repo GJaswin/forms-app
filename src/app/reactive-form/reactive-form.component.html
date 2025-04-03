@@ -10,6 +10,12 @@
     Form Submitted!</p>
 </div>
 
+<div *ngIf="error">
+  <p
+    class="absolute top-2 left-[50%] translate-x-[-50%] bg-rose-200 text-rose-800 p-3 text-center rounded-lg font-bold">
+    Form has invalid values!</p>
+</div>
+
 <form action="#" class="bg-amber-100 rounded-lg p-5" [formGroup]="reactiveForm" (submit)="onSubmit()">
   <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
     <div>
@@ -48,6 +54,8 @@
           Age is required.</p>
         <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('age')?.errors?.['min']">
           You must be above 18 years old.</p>
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="reactiveForm.get('age')?.errors?.['max']">
+          Enter a Valid Age</p>
       </div>
     </div>
 
@@ -68,7 +76,11 @@
         <p class="absolute top-2 text-red-500 font-semibold"
           *ngIf="reactiveForm.hasError('passwordMismatch') && reactiveForm.touched">
           Passwords do not match.</p>
+        <p class="absolute top-2 text-red-500 font-semibold"
+          *ngIf="reactiveForm.get('confirm_password')?.errors?.['required'] && reactiveForm.touched">
+          Enter a password.</p>
       </div>
+
     </div>
 
     <div>

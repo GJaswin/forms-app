@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { NgIf, NgFor } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CountriesService } from '../countries.service';
 import { ConfirmPasswordDirective } from './confirm-password.directive';
 
 interface FormDetails {
   name: string;
   email: string;
-  phone: number;
-  age: number;
+  phone: number | undefined;
+  age: number | undefined;
   password: string;
   confirm_password: string;
   address: string;
@@ -37,6 +37,7 @@ export class TemplateFormComponent {
   cities: any[] = [];
   loadingCountries = true;
   submitted = false;
+  error = false;
 
 
   ngOnInit(): void {
@@ -126,12 +127,22 @@ export class TemplateFormComponent {
     this.cityFieldLeave();
   }
 
-  onSubmit() {
-    console.log("Submitted", this.details);
-    this.submitted = true;
-    setTimeout(() => {
-      this.submitted = false;
-    }, 4000);
+  onSubmit(templateForm: NgForm) {
+    if (templateForm.valid) {
+      console.log("Submitted", this.details);
+      this.submitted = true;
+      setTimeout(() => {
+        this.submitted = false;
+      }, 4000);
+    } else {
+      console.error("Error: Invalid Form Details");
+      templateForm.form.markAllAsTouched();
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 4000);
+    }
+
   }
 
 
@@ -139,8 +150,8 @@ export class TemplateFormComponent {
   details: FormDetails = {
     name: '',
     email: '',
-    phone: NaN,
-    age: NaN,
+    phone: undefined,
+    age: undefined,
     password: '',
     confirm_password: '',
     address: '',

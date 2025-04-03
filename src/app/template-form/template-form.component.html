@@ -10,7 +10,13 @@
     Form Submitted!</p>
 </div>
 
-<form action="#" class="bg-violet-100 rounded-lg p-5" #templateForm="ngForm" (ngSubmit)="onSubmit()">
+<div *ngIf="error">
+  <p
+    class="absolute top-2 left-[50%] translate-x-[-50%] bg-rose-200 text-rose-800 p-3 text-center rounded-lg font-bold">
+    Form has invalid values!</p>
+</div>
+
+<form action="#" class="bg-violet-100 rounded-lg p-5" #templateForm="ngForm" (ngSubmit)="onSubmit(templateForm)">
   <div class="grid md:grid-cols-2 grid-cols-1 gap-10">
     <div>
       <label for="name" class="t-input-label">Name</label>
@@ -46,12 +52,14 @@
     <div>
       <label for="age" class="t-input-label">Age</label>
       <input type="number" id="age" name="age" class="t-input-field" required [(ngModel)]="details.age" #age="ngModel"
-        min="18">
+        min="18" max="130">
       <div *ngIf="age.invalid && age.touched" class="relative">
         <p class="absolute top-2 text-red-500 font-semibold" *ngIf="age.errors?.['required']">
           Age is required.</p>
         <p class="absolute top-2 text-red-500 font-semibold" *ngIf="age.errors?.['min']">
           You must be above 18 years old.</p>
+        <p class="absolute top-2 text-red-500 font-semibold" *ngIf="age.errors?.['max']">
+          Enter a Valid Age</p>
       </div>
     </div>
 
@@ -73,6 +81,9 @@
         <p class="absolute top-2 text-red-500 font-semibold"
           *ngIf="confirm_password.errors?.['passwordMismatch'] && confirm_password.touched">
           Passwords do not match.</p>
+        <p class="absolute top-2 text-red-500 font-semibold"
+          *ngIf="confirm_password.errors?.['required'] && confirm_password.touched">
+          Enter a password.</p>
       </div>
     </div>
 
@@ -151,6 +162,6 @@
   </div>
   <div class="mt-10 flex justify-center">
     <button class="bg-violet-700 w-[75%] p-3 text-white rounded-md transition-all ease-in-out hover:bg-violet-500"
-      [disabled]="!templateForm.form.valid">Submit</button>
+      >Submit</button>
   </div>
 </form>
